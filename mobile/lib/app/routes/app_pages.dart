@@ -1,0 +1,53 @@
+import 'package:get/get.dart';
+
+import '../../features/home/bindings/home_binding.dart';
+import '../../features/home/views/home_view.dart';
+import '../../features/package/bindings/package_binding.dart';
+import '../../features/package/views/package_view.dart';
+import '../../features/qr_scanner/bindings/qr_scanner_binding.dart';
+import '../../features/qr_scanner/views/qr_scanner_view.dart';
+import '../../features/search/bindings/search_binding.dart';
+import '../../features/search/views/search_view.dart';
+import '../../features/shelf/bindings/shelf_binding.dart';
+import '../../features/shelf/views/shelf_view.dart';
+import '../../features/statistics/bindings/statistics_binding.dart';
+import '../../features/statistics/views/statistics_view.dart';
+
+part 'app_routes.dart';
+
+class AppPages {
+  static const initial = Routes.home;
+
+  static final routes = [
+    GetPage(
+      name: Routes.home,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: Routes.qrScanner,
+      page: () => const QrScannerView(),
+      binding: QrScannerBinding(),
+    ),
+    GetPage(
+      name: Routes.shelf,
+      page: () => const ShelfView(),
+      binding: ShelfBinding(),
+    ),
+    GetPage(
+      name: Routes.packageDetail,
+      page: () => const PackageView(),
+      binding: PackageBinding(),
+    ),
+    GetPage(
+      name: Routes.search,
+      page: () => const SearchView(),
+      binding: SearchBinding(),
+    ),
+    GetPage(
+      name: Routes.statistics,
+      page: () => const StatisticsView(),
+      binding: StatisticsBinding(),
+    ),
+  ];
+}
