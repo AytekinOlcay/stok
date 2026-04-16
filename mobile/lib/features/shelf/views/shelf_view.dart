@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/shelf_controller.dart';
 
@@ -8,13 +9,83 @@ class ShelfView extends GetView<ShelfController> {
 
   @override
   Widget build(BuildContext context) {
-    final shelfId = Get.parameters['id'] ?? '-';
-
     return Scaffold(
-      appBar: AppBar(title: const Text('Shelf Details')),
-      body: Center(
-        child: Text('Shelf ID: $shelfId'),
+      appBar: Obx(() {
+        final s = controller.shelf.value;
+        final title = s != null
+            ? (s['name'] as String? ?? 'Shelf ${s['position']}')
+            : 'Shelf';
+        return AppBar(title: Text(title));
+      }),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final packages = controller.packages;
+        if (packages.isEmpty) {
+          return const Center(child: Text('No packages on this shelf.'));
+        }
+        return ListView.separated(
+          padding: const EdgeInsets.all(16),
+          itemCount: packages.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          itemBuilder: (context, i) {
+            final pkg = packages[i];
+            final product = pkg['products'] as Map<String, dynamic>?;
+            final name = product?['name'] ?? 'Unknown';
+            final qty = pkg['quantity'] ?? 0;
+            final unit = pkg['unit'] ?? '';
+            final consumeBefore = _formatDate(pkg['recommended_consume_before']);
+
+            return Card(
+              child: ListTile(
+                title: Text('$name — $qty $unit'),
+                subtitle: consumeBefore.isNotEmpty
+                    ? Text('TETT: $consumeBefore')
+                    : null,
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete_outline, color: Colors.red),
+                  onPressed: () => _confirmRemove(context, pkg),
+                ),
+                onTap: () => Get.toNamed('/package/${pkg['id']}'),
+              ),
+            );
+          },
+        );
+      }),
+    );
+  }
+
+  void _confirmRemove(BuildContext context, Map<String, dynamic> pkg) {
+    final product = pkg['products'] as Map<String, dynamic>?;
+    final name = product?['name'] ?? 'this package';
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Remove Package'),
+        content: Text('Remove "$name" from this shelf?'),
+        actions: [
+          TextButton(
+              onPressed: () => Get.back(), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () {
+              Get.back();
+              controller.removePackage(pkg['id'] as String);
+            },
+            child:
+                const Text('Remove', style: TextStyle(color: Colors.red)),
+          ),
+        ],
       ),
     );
+  }
+
+  String _formatDate(dynamic value) {
+    if (value == null) return '';
+    try {
+      return DateFormat('dd.MM.yyyy').format(DateTime.parse(value.toString()));
+    } catch (_) {
+      return value.toString();
+    }
   }
 }
