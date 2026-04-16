@@ -26,8 +26,8 @@ export default async function LogsPage() {
             <tr key={l.id} className="border-t">
               <td className="px-4 py-2">{new Date(l.created_at).toLocaleDateString()}</td>
               <td className="px-4 py-2">{l.action_type}</td>
-              <td className="px-4 py-2">{(l.products as { name: string } | null)?.name ?? "—"}</td>
-              <td className="px-4 py-2">{(l.shelves as { name: string } | null)?.name ?? "—"}</td>
+              <td className="px-4 py-2">{(l.products as unknown as { name: string } | null)?.name ?? "—"}</td>
+              <td className="px-4 py-2">{(l.shelves as unknown as { name: string } | null)?.name ?? "—"}</td>
               <td className="px-4 py-2">{l.quantity} {l.unit}</td>
             </tr>
           ))}
