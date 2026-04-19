@@ -1,0 +1,8 @@
+# Environment files — never commit secrets
+.env.local
+.env.*.local
+web/.env.local
+
+# Supabase
+supabase/.branches
+supabase/.temp

@@ -35,7 +35,7 @@ class SearchView extends GetView<SearchController> {
                 }
                 return ListView.separated(
                   itemCount: controller.results.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  separatorBuilder: (context, index) => const SizedBox(height: 8),
                   itemBuilder: (context, i) {
                     final pkg = controller.results[i];
                     final product =

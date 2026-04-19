@@ -17,7 +17,8 @@ export default async function StatisticsPage() {
   // Group by product
   const grouped: Record<string, { name: string; total: number; unit: string }> = {};
   for (const row of consumption ?? []) {
-    const name = (row.products as { name: string } | null)?.name ?? "Unknown";
+    const product = row.products as unknown as { name: string } | null;
+    const name = product?.name ?? "Unknown";
     if (!grouped[name]) grouped[name] = { name, total: 0, unit: row.unit };
     grouped[name].total += Number(row.quantity);
   }

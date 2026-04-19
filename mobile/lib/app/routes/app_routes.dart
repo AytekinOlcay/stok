@@ -7,4 +7,6 @@ abstract class Routes {
   static const packageDetail = '/package/:id';
   static const search        = '/search';
   static const statistics    = '/statistics';
+  static const products      = '/products';
+  static const shelvesList   = '/shelves';
 }

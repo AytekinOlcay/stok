@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../features/add_package/views/add_package_sheet.dart';
+import '../../../widgets/qr_display_dialog.dart';
 import '../controllers/shelf_controller.dart';
 
 class ShelfView extends GetView<ShelfController> {
@@ -10,12 +12,48 @@ class ShelfView extends GetView<ShelfController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Obx(() {
+      appBar: AppBar(
+        title: Obx(() {
+          final s = controller.shelf.value;
+          final title = s != null
+              ? (s['name'] as String? ?? 'Shelf ${s['position']}')
+              : 'Shelf';
+          return Text(title);
+        }),
+        actions: [
+          Obx(() {
+            final s = controller.shelf.value;
+            if (s == null) return const SizedBox.shrink();
+            return IconButton(
+              icon: const Icon(Icons.qr_code),
+              tooltip: 'Show QR',
+              onPressed: () => showQrDialog(
+                context,
+                type: 'shelf',
+                id: s['id'] as String,
+                label: s['name'] as String? ?? 'Shelf ${s['position']}',
+              ),
+            );
+          }),
+        ],
+      ),
+      floatingActionButton: Obx(() {
         final s = controller.shelf.value;
-        final title = s != null
-            ? (s['name'] as String? ?? 'Shelf ${s['position']}')
-            : 'Shelf';
-        return AppBar(title: Text(title));
+        if (s == null) return const SizedBox.shrink();
+        return FloatingActionButton(
+          onPressed: () => showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            builder: (_) => AddPackageSheet(
+              shelfId: s['id'] as String,
+              onAdded: () => controller.fetchShelf(s['id'] as String),
+            ),
+          ),
+          child: const Icon(Icons.add),
+        );
       }),
       body: Obx(() {
         if (controller.isLoading.value) {
@@ -28,7 +66,7 @@ class ShelfView extends GetView<ShelfController> {
         return ListView.separated(
           padding: const EdgeInsets.all(16),
           itemCount: packages.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          separatorBuilder: (context, index) => const SizedBox(height: 8),
           itemBuilder: (context, i) {
             final pkg = packages[i];
             final product = pkg['products'] as Map<String, dynamic>?;
@@ -89,3 +127,4 @@ class ShelfView extends GetView<ShelfController> {
     }
   }
 }
+
