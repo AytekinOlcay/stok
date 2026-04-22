@@ -2,14 +2,13 @@
 -- Freezer Inventory System — Initial Schema
 -- ============================================================
 
--- Enable UUID extension
-create extension if not exists "uuid-ossp";
+-- gen_random_uuid() is built-in on PostgreSQL 14+; no extension needed.
 
 -- ============================================================
 -- SHELVES
 -- ============================================================
 create table shelves (
-  id          uuid primary key default uuid_generate_v4(),
+  id          uuid primary key default gen_random_uuid(),
   name        text not null,
   position    integer not null,
   qr_code     text unique,
@@ -30,7 +29,7 @@ insert into shelves (name, position) values
 -- PRODUCTS
 -- ============================================================
 create table products (
-  id                              uuid primary key default uuid_generate_v4(),
+  id                              uuid primary key default gen_random_uuid(),
   name                            text not null,
   category                        text,
   default_unit                    text not null default 'g',
@@ -42,7 +41,7 @@ create table products (
 -- PACKAGES (inventory items)
 -- ============================================================
 create table packages (
-  id                       uuid primary key default uuid_generate_v4(),
+  id                       uuid primary key default gen_random_uuid(),
   product_id               uuid not null references products(id) on delete restrict,
   shelf_id                 uuid not null references shelves(id) on delete restrict,
   quantity                 numeric not null check (quantity > 0),
@@ -89,7 +88,7 @@ create type inventory_action as enum (
 );
 
 create table inventory_logs (
-  id           uuid primary key default uuid_generate_v4(),
+  id           uuid primary key default gen_random_uuid(),
   package_id   uuid references packages(id) on delete set null,
   product_id   uuid references products(id) on delete set null,
   shelf_id     uuid references shelves(id) on delete set null,
