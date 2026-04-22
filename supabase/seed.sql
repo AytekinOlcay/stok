@@ -1,11 +1,10 @@
 -- Seed data for development
 -- Products
 insert into products (name, category, default_unit, recommended_freezer_storage_days) values
-  ('Chicken',      'Meat',    'g',     270),
-  ('Minced Meat',  'Meat',    'g',     180),
-  ('Beef',         'Meat',    'g',     270),
-  ('Chickpeas',    'Legumes', 'g',     365),
-  ('Salmon',       'Fish',    'g',     90),
-  ('Pork',         'Meat',    'g',     180),
-  ('Broccoli',     'Vegetable','g',    365),
-  ('Bread',        'Bakery',  'piece', 90);
+  ('Tavuk',      'Et',       'g',     270),
+  ('Kıyma',      'Et',       'g',     180),
+  ('Dana Eti',   'Et',       'g',     270),
+  ('Nohut',      'Baklagil', 'g',     365),
+  ('Somon',      'Balık',    'g',     90),
+  ('Brokoli',    'Sebze',    'g',     365),
+  ('Ekmek',      'Fırın',    'piece', 90);
