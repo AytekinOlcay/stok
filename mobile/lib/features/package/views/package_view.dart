@@ -12,7 +12,7 @@ class PackageView extends GetView<PackageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Package Details'),
+        title: const Text('Paket Detayı'),
         actions: [
           Obx(() {
             final pkg = controller.package.value;
@@ -21,7 +21,7 @@ class PackageView extends GetView<PackageController> {
             final label = product?['name'] as String? ?? 'Package';
             return IconButton(
               icon: const Icon(Icons.qr_code),
-              tooltip: 'Show QR',
+              tooltip: 'QR Göster',
               onPressed: () => showQrDialog(
                 context,
                 type: 'package',
@@ -41,7 +41,7 @@ class PackageView extends GetView<PackageController> {
         }
         final pkg = controller.package.value;
         if (pkg == null) {
-          return const Center(child: Text('Package not found.'));
+          return const Center(child: Text('Paket bulunamadı.'));
         }
 
         final product = pkg['products'] as Map<String, dynamic>?;
@@ -61,34 +61,34 @@ class PackageView extends GetView<PackageController> {
           padding: const EdgeInsets.all(16),
           children: [
             _SectionCard(children: [
-              _DetailRow(label: 'Product', value: productName),
+              _DetailRow(label: 'Ürün', value: productName),
               _DetailRow(
-                  label: 'Quantity',
+                  label: 'Miktar',
                   value:
                       '${quantity % 1 == 0 ? quantity.toInt() : quantity} $unit'),
-              _DetailRow(label: 'Shelf', value: shelfName),
+              _DetailRow(label: 'Raf', value: shelfName),
             ]),
             const SizedBox(height: 12),
             _SectionCard(children: [
-              _DetailRow(label: 'Added', value: addedAt),
+              _DetailRow(label: 'Eklendi', value: addedAt),
               _DetailRow(
-                  label: 'Consume Before',
+                  label: 'TETT',
                   value: consumeBefore,
                   highlight: true),
               if (expirationDate.isNotEmpty)
-                _DetailRow(label: 'Expiration', value: expirationDate),
+                _DetailRow(label: 'Son Kullanma', value: expirationDate),
             ]),
             const SizedBox(height: 12),
             _SectionCard(children: [
               _DetailRow(
-                  label: 'Total Stock ($productName)',
+                  label: 'Toplam Stok ($productName)',
                   value:
                       '${total % 1 == 0 ? total.toInt() : total} $unit'),
             ]),
             if (notes != null && notes.isNotEmpty) ...[
               const SizedBox(height: 12),
               _SectionCard(children: [
-                _DetailRow(label: 'Notes', value: notes),
+                _DetailRow(label: 'Notlar', value: notes),
               ]),
             ],
             const SizedBox(height: 20),
@@ -155,7 +155,7 @@ class _ConsumeSectionState extends State<_ConsumeSection> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Use from package',
+              Text('Paketten Kullan',
                   style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 12),
               Row(
@@ -166,7 +166,7 @@ class _ConsumeSectionState extends State<_ConsumeSection> {
                       keyboardType: const TextInputType.numberWithOptions(
                           decimal: true),
                       decoration: InputDecoration(
-                        labelText: 'Amount (${widget.unit})',
+                        labelText: 'Miktar (${widget.unit})',
                         border: const OutlineInputBorder(),
                         isDense: true,
                       ),
@@ -182,7 +182,7 @@ class _ConsumeSectionState extends State<_ConsumeSection> {
                             child: CircularProgressIndicator(
                                 strokeWidth: 2, color: Colors.white),
                           )
-                        : const Text('Use'),
+                        : const Text('Kullan'),
                   ),
                 ],
               ),
@@ -197,7 +197,7 @@ class _ConsumeSectionState extends State<_ConsumeSection> {
                         color: Theme.of(context).colorScheme.error),
                   ),
                   child: Text(
-                    'Use All '
+                    'Tümünü Kullan '
                     '(${widget.maxQty % 1 == 0 ? widget.maxQty.toInt() : widget.maxQty} ${widget.unit})',
                   ),
                 ),
@@ -212,12 +212,12 @@ class _ConsumeSectionState extends State<_ConsumeSection> {
   void _submitPartial() {
     final amount = double.tryParse(_ctrl.text.trim());
     if (amount == null || amount <= 0) {
-      Get.snackbar('Validation', 'Enter a valid amount.');
+      Get.snackbar('Hata', 'Geçerli bir miktar girin.');
       return;
     }
     if (amount > widget.maxQty) {
-      Get.snackbar('Validation',
-          'Amount exceeds available quantity (${widget.maxQty} ${widget.unit}).');
+      Get.snackbar('Hata',
+          'Miktar mevcut miktarı aşıyor (${widget.maxQty} ${widget.unit}).');
       return;
     }
     _ctrl.clear();

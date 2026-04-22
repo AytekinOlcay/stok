@@ -32,15 +32,15 @@ void showQrDialog(
             ),
             const SizedBox(height: 8),
             Text(
-              type == 'shelf' ? 'Shelf QR' : 'Package QR',
+              type == 'shelf' ? 'Raf QR' : 'Paket QR',
               style: const TextStyle(fontSize: 12, color: Colors.grey),
             ),
             if (productName != null || addedAt != null || consumeBefore != null) ...[
               const Divider(height: 20),
               if (productName != null)
-                _InfoRow(label: 'Product', value: productName),
+                _InfoRow(label: 'Ürün', value: productName),
               if (addedAt != null)
-                _InfoRow(label: 'Added', value: addedAt),
+                _InfoRow(label: 'Eklendi', value: addedAt),
               if (consumeBefore != null)
                 _InfoRow(
                   label: 'TETT',
@@ -54,7 +54,7 @@ void showQrDialog(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Close'),
+          child: const Text('Kapat'),
         ),
       ],
     ),

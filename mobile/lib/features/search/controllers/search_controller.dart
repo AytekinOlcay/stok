@@ -77,7 +77,7 @@ class SearchController extends GetxController {
       results.addAll(data);
       _offset += data.length;
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load: $e');
+      Get.snackbar('Hata', 'Yüklenemedi: $e');
     } finally {
       isLoading.value = false;
       isLoadingMore.value = false;

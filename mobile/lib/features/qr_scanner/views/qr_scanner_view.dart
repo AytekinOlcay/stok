@@ -10,7 +10,7 @@ class QrScannerView extends GetView<QrScannerController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Scan QR Code')),
+      appBar: AppBar(title: const Text('QR Kodu Tara')),
       body: Stack(
         children: [
           MobileScanner(
@@ -40,7 +40,7 @@ class QrScannerView extends GetView<QrScannerController> {
             left: 0,
             right: 0,
             child: const Text(
-              'Point camera at a shelf or package QR code',
+              'Kamerayı raf veya paket QR koduna tutun',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white, fontSize: 14),
             ),

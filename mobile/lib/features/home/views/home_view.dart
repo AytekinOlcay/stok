@@ -9,38 +9,38 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Freezer Inventory')),
+      appBar: AppBar(title: const Text('Dondurucu Takip')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _MenuButton(
               icon: Icons.qr_code_scanner,
-              label: 'Scan QR',
+              label: 'QR Tara',
               onTap: () => Get.toNamed('/qr-scanner'),
             ),
             const SizedBox(height: 16),
             _MenuButton(
               icon: Icons.kitchen,
-              label: 'Shelves',
+              label: 'Raflar',
               onTap: () => Get.toNamed('/shelves'),
             ),
             const SizedBox(height: 16),
             _MenuButton(
               icon: Icons.search,
-              label: 'Search',
+              label: 'Ara',
               onTap: () => Get.toNamed('/search'),
             ),
             const SizedBox(height: 16),
             _MenuButton(
               icon: Icons.inventory_2_outlined,
-              label: 'Products',
+              label: 'Ürünler',
               onTap: () => Get.toNamed('/products'),
             ),
             const SizedBox(height: 16),
             _MenuButton(
               icon: Icons.bar_chart,
-              label: 'Statistics',
+              label: 'İstatistikler',
               onTap: () => Get.toNamed('/statistics'),
             ),
           ],

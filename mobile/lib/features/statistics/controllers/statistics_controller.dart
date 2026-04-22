@@ -42,7 +42,7 @@ class StatisticsController extends GetxController {
             (b['total'] as double).compareTo(a['total'] as double));
       consumption.value = sorted;
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load statistics: $e');
+      Get.snackbar('Hata', 'İstatistikler yüklenemedi: $e');
     } finally {
       isLoading.value = false;
     }

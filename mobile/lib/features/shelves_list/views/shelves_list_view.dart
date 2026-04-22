@@ -10,7 +10,7 @@ class ShelvesListView extends GetView<ShelvesListController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shelves'),
+        title: const Text('Raflar'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -24,7 +24,7 @@ class ShelvesListView extends GetView<ShelvesListController> {
         }
         final shelves = controller.shelves;
         if (shelves.isEmpty) {
-          return const Center(child: Text('No shelves found.'));
+          return const Center(child: Text('Raf bulunamadı.'));
         }
         return ListView.separated(
           padding: const EdgeInsets.all(16),

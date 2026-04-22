@@ -29,7 +29,11 @@ class PackageController extends GetxController {
       package.value = data;
       await _refreshStock(data['product_id'] as String);
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load package: $e');
+      if (e is PostgrestException && e.code == 'PGRST116') {
+        Get.back();
+        return;
+      }
+      Get.snackbar('Hata', 'Paket yüklenemedi: $e');
     } finally {
       isLoading.value = false;
     }

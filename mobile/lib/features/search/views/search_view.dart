@@ -10,14 +10,14 @@ class SearchView extends GetView<SearchController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Inventory')),
+      appBar: AppBar(title: const Text('Envanter')),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Search by product name…',
+                hintText: 'Ürün adına göre ara…',
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -49,8 +49,8 @@ class SearchView extends GetView<SearchController> {
                       const SizedBox(height: 16),
                       Text(
                         controller.query.value.isEmpty
-                            ? 'No packages in freezer'
-                            : 'No results found',
+                            ? 'Dondurucuda paket yok'
+                            : 'Sonuç bulunamadı',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -181,7 +181,7 @@ class _PackageCard extends StatelessWidget {
               if (addedAt.isNotEmpty)
                 _InfoRow(
                   icon: Icons.calendar_today_outlined,
-                  label: 'Added: $addedAt',
+                  label: 'Eklendi: $addedAt',
                 ),
               if (consumeBefore.isNotEmpty)
                 _InfoRow(
@@ -192,7 +192,7 @@ class _PackageCard extends StatelessWidget {
               if (expirationDate.isNotEmpty)
                 _InfoRow(
                   icon: Icons.warning_amber_outlined,
-                  label: 'Exp: $expirationDate',
+                  label: 'SKT: $expirationDate',
                   color: cs.error,
                 ),
               if (notes != null && notes.isNotEmpty)

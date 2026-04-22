@@ -10,7 +10,7 @@ class StatisticsView extends GetView<StatisticsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Statistics'),
+        title: const Text('İstatistikler'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -31,7 +31,7 @@ class StatisticsView extends GetView<StatisticsController> {
         return ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            const Text('Total Consumption',
+            const Text('Toplam Tüketim',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             ...items.map((item) => _ConsumptionTile(

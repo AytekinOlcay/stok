@@ -11,7 +11,7 @@ class ProductsView extends GetView<ProductsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
+        title: const Text('Ürünler'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -36,11 +36,11 @@ class ProductsView extends GetView<ProductsController> {
                 const Icon(Icons.inventory_2_outlined,
                     size: 64, color: Colors.grey),
                 const SizedBox(height: 16),
-                const Text('No products yet'),
+                const Text('Henüz ürün yok'),
                 const SizedBox(height: 8),
                 FilledButton(
                   onPressed: () => _showAddSheet(context),
-                  child: const Text('Add first product'),
+                  child: const Text('İlk ürünü ekle'),
                 ),
               ],
             ),
@@ -65,7 +65,7 @@ class ProductsView extends GetView<ProductsController> {
                   ),
                   title: Text(name),
                   subtitle: Text(
-                    '${category ?? 'No category'} · $unit · $days days',
+                    '${category ?? 'Kategori yok'} · $unit · $days gün',
                   ),
                 ),
               );

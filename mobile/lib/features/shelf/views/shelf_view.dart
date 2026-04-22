@@ -16,8 +16,8 @@ class ShelfView extends GetView<ShelfController> {
         title: Obx(() {
           final s = controller.shelf.value;
           final title = s != null
-              ? (s['name'] as String? ?? 'Shelf ${s['position']}')
-              : 'Shelf';
+              ? (s['name'] as String? ?? 'Raf ${s['position']}')
+              : 'Raf';
           return Text(title);
         }),
         actions: [
@@ -26,12 +26,12 @@ class ShelfView extends GetView<ShelfController> {
             if (s == null) return const SizedBox.shrink();
             return IconButton(
               icon: const Icon(Icons.qr_code),
-              tooltip: 'Show QR',
+              tooltip: 'QR Göster',
               onPressed: () => showQrDialog(
                 context,
                 type: 'shelf',
                 id: s['id'] as String,
-                label: s['name'] as String? ?? 'Shelf ${s['position']}',
+                label: s['name'] as String? ?? 'Raf ${s['position']}',
               ),
             );
           }),
@@ -61,7 +61,7 @@ class ShelfView extends GetView<ShelfController> {
         }
         final packages = controller.packages;
         if (packages.isEmpty) {
-          return const Center(child: Text('No packages on this shelf.'));
+          return const Center(child: Text('Bu rafta paket yok.'));
         }
         return ListView.separated(
           padding: const EdgeInsets.all(16),
@@ -100,18 +100,18 @@ class ShelfView extends GetView<ShelfController> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Remove Package'),
-        content: Text('Remove "$name" from this shelf?'),
+        title: const Text('Paketi Kaldır'),
+        content: Text('"$name" bu raftan kaldırılsın mı?'),
         actions: [
           TextButton(
-              onPressed: () => Get.back(), child: const Text('Cancel')),
+              onPressed: () => Get.back(), child: const Text('İptal')),
           TextButton(
             onPressed: () {
               Get.back();
               controller.removePackage(pkg['id'] as String);
             },
             child:
-                const Text('Remove', style: TextStyle(color: Colors.red)),
+                const Text('Kaldır', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),

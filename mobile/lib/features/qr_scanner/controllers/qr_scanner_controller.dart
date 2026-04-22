@@ -21,11 +21,13 @@ class QrScannerController extends GetxController {
       } else if (type == 'package') {
         Get.offNamed('/package/$id');
       } else {
-        Get.snackbar('Unknown QR', 'This QR code is not recognized.');
+        Get.snackbar('Uyarı', 'Bu bir freezer QR kodu değil.',
+            duration: const Duration(seconds: 3));
         isProcessing.value = false;
       }
     } catch (_) {
-      Get.snackbar('Invalid QR', 'Could not parse QR code content.');
+      Get.snackbar('Uyarı', 'Bu bir freezer QR kodu değil.',
+          duration: const Duration(seconds: 3));
       isProcessing.value = false;
     }
   }

@@ -29,7 +29,11 @@ class ShelfController extends GetxController {
           .order('added_at', ascending: false);
       packages.value = List<Map<String, dynamic>>.from(pkgs);
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load shelf: $e');
+      if (e is PostgrestException && e.code == 'PGRST116') {
+        Get.back();
+        return;
+      }
+      Get.snackbar('Hata', 'Raf yüklenemedi: $e');
     } finally {
       isLoading.value = false;
     }
@@ -41,7 +45,7 @@ class ShelfController extends GetxController {
       packages.removeWhere((p) => p['id'] == packageId);
       Get.snackbar('Done', 'Package removed from shelf.');
     } catch (e) {
-      Get.snackbar('Error', 'Could not remove package: $e');
+      Get.snackbar('Hata', 'Paket kaldırılamadı: $e');
     }
   }
 }
