@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/services/session_service.dart';
+
 class SearchController extends GetxController {
   final _supabase = Supabase.instance.client;
 
@@ -54,6 +56,7 @@ class SearchController extends GetxController {
     }
 
     try {
+      final orgId = Get.find<SessionService>().currentOrgId;
       final q = query.value.trim();
       final List<dynamic> response;
 
@@ -61,12 +64,14 @@ class SearchController extends GetxController {
         response = await _supabase
             .from('packages')
             .select('*, products(*), shelves(*)')
+            .eq('org_id', orgId)
             .order('added_at', ascending: false)
             .range(_offset, _offset + _pageSize - 1);
       } else {
         response = await _supabase
             .from('packages')
             .select('*, products!inner(*), shelves(*)')
+            .eq('org_id', orgId)
             .ilike('products.name', '%$q%')
             .order('added_at', ascending: false)
             .range(_offset, _offset + _pageSize - 1);

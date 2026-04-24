@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/services/session_service.dart';
+
 class ProductsController extends GetxController {
   final _supabase = Supabase.instance.client;
 
@@ -17,13 +19,15 @@ class ProductsController extends GetxController {
   Future<void> fetchProducts() async {
     isLoading.value = true;
     try {
+      final orgId = Get.find<SessionService>().currentOrgId;
       final data = await _supabase
           .from('products')
           .select('*')
+          .eq('org_id', orgId)
           .order('name');
       products.value = List<Map<String, dynamic>>.from(data);
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load products: $e');
+      Get.snackbar('Hata', 'Ürünler yüklenemedi: $e');
     } finally {
       isLoading.value = false;
     }
@@ -37,7 +41,9 @@ class ProductsController extends GetxController {
   }) async {
     isSubmitting.value = true;
     try {
+      final orgId = Get.find<SessionService>().currentOrgId;
       await _supabase.from('products').insert({
+        'org_id': orgId,
         'name': name,
         if (category != null && category.isNotEmpty) 'category': category,
         'default_unit': defaultUnit,
@@ -46,7 +52,7 @@ class ProductsController extends GetxController {
       await fetchProducts();
       return true;
     } catch (e) {
-      Get.snackbar('Error', 'Failed to add product: $e');
+      Get.snackbar('Hata', 'Ürün eklenemedi: $e');
       return false;
     } finally {
       isSubmitting.value = false;

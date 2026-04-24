@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/services/session_service.dart';
+
 class AddPackageSheet extends StatefulWidget {
   final String shelfId;
   final VoidCallback onAdded;
@@ -52,9 +54,11 @@ class _AddPackageSheetState extends State<AddPackageSheet> {
 
   Future<void> _loadProducts() async {
     try {
+      final orgId = Get.find<SessionService>().currentOrgId;
       final data = await _supabase
           .from('products')
           .select('id, name, default_unit')
+          .eq('org_id', orgId)
           .order('name');
       setState(() {
         _products = List<Map<String, dynamic>>.from(data);
@@ -261,7 +265,9 @@ class _AddPackageSheetState extends State<AddPackageSheet> {
 
     setState(() => _submitting = true);
     try {
+      final orgId = Get.find<SessionService>().currentOrgId;
       await _supabase.from('packages').insert({
+        'org_id': orgId,
         'product_id': _selectedProductId,
         'shelf_id': widget.shelfId,
         'quantity': qty,

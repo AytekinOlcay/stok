@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import { createAuthClient } from "@/lib/supabase/auth-server";
+import { createClient } from "@/lib/supabase/server";
+import { SignOutButton } from "@/components/sign-out-button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,11 +29,26 @@ const navItems = [
   { href: "/statistics", label: "📈 Statistics" },
 ];
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createAuthClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Check platform admin status to conditionally show godmin nav link
+  let isGodmin = false;
+  if (user) {
+    const serviceClient = await createClient();
+    const { data: adminRow } = await serviceClient
+      .from("platform_admins")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    isGodmin = !!adminRow;
+  }
+
   return (
     <html
       lang="en"
@@ -51,7 +69,26 @@ export default function RootLayout({
                 {item.label}
               </Link>
             ))}
+            {isGodmin && (
+              <>
+                <div className="mx-3 my-2 border-t" />
+                <Link
+                  href="/godmin/organizations"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-amber-700 hover:bg-amber-50 transition-colors"
+                >
+                  🛡️ Godmin
+                </Link>
+              </>
+            )}
           </nav>
+          {user && (
+            <div className="px-2 py-3 border-t space-y-1">
+              <p className="px-3 text-xs text-muted-foreground truncate">
+                {user.email}
+              </p>
+              <SignOutButton />
+            </div>
+          )}
         </aside>
         <main className="flex-1 overflow-auto">{children}</main>
       </body>

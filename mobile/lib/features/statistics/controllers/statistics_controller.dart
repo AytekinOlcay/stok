@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/services/session_service.dart';
+
 class StatisticsController extends GetxController {
   final _supabase = Supabase.instance.client;
 
@@ -17,9 +19,11 @@ class StatisticsController extends GetxController {
   Future<void> fetchStats() async {
     isLoading.value = true;
     try {
+      final orgId = Get.find<SessionService>().currentOrgId;
       final data = await _supabase
           .from('inventory_logs')
           .select('quantity, products(name, default_unit)')
+          .eq('org_id', orgId)
           .eq('action_type', 'package_removed');
 
       // Aggregate in Dart: sum quantity per product

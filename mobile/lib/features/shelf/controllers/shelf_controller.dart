@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/services/session_service.dart';
+
 class ShelfController extends GetxController {
   final _supabase = Supabase.instance.client;
 
@@ -18,14 +20,20 @@ class ShelfController extends GetxController {
   Future<void> fetchShelf(String id) async {
     isLoading.value = true;
     try {
-      final shelfData =
-          await _supabase.from('shelves').select().eq('id', id).single();
+      final orgId = Get.find<SessionService>().currentOrgId;
+      final shelfData = await _supabase
+          .from('shelves')
+          .select()
+          .eq('id', id)
+          .eq('org_id', orgId)
+          .single();
       shelf.value = shelfData;
 
       final pkgs = await _supabase
           .from('packages')
           .select('*, products(*)')
           .eq('shelf_id', id)
+          .eq('org_id', orgId)
           .order('added_at', ascending: false);
       packages.value = List<Map<String, dynamic>>.from(pkgs);
     } catch (e) {

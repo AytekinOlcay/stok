@@ -1,7 +1,11 @@
 import 'package:get/get.dart';
 
+import '../../features/auth/bindings/auth_binding.dart';
+import '../../features/auth/views/auth_view.dart';
 import '../../features/home/bindings/home_binding.dart';
 import '../../features/home/views/home_view.dart';
+import '../../features/onboarding/bindings/onboarding_binding.dart';
+import '../../features/onboarding/views/onboarding_view.dart';
 import '../../features/package/bindings/package_binding.dart';
 import '../../features/package/views/package_view.dart';
 import '../../features/products/bindings/products_binding.dart';
@@ -14,15 +18,32 @@ import '../../features/shelf/bindings/shelf_binding.dart';
 import '../../features/shelf/views/shelf_view.dart';
 import '../../features/shelves_list/bindings/shelves_list_binding.dart';
 import '../../features/shelves_list/views/shelves_list_view.dart';
+import '../../features/splash/bindings/splash_binding.dart';
+import '../../features/splash/views/splash_view.dart';
 import '../../features/statistics/bindings/statistics_binding.dart';
 import '../../features/statistics/views/statistics_view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
-  static const initial = Routes.home;
+  static const initial = Routes.splash;
 
   static final routes = [
+    GetPage(
+      name: Routes.splash,
+      page: () => const SplashView(),
+      binding: SplashBinding(),
+    ),
+    GetPage(
+      name: Routes.login,
+      page: () => const AuthView(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: Routes.onboarding,
+      page: () => const OnboardingView(),
+      binding: OnboardingBinding(),
+    ),
     GetPage(
       name: Routes.home,
       page: () => const HomeView(),
