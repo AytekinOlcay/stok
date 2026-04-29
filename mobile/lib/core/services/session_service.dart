@@ -31,7 +31,9 @@ class SessionService extends GetxService {
   /// Returns true if the user belongs to an org.
   Future<bool> loadSession() async {
     try {
-      final result = await _supabase.rpc('get_my_org');
+      final result = await _supabase
+          .rpc('get_my_org')
+          .timeout(const Duration(seconds: 15));
       if (result == null) {
         orgId.value = null;
         return false;
@@ -40,9 +42,9 @@ class SessionService extends GetxService {
       orgName.value = result['org_name'] as String?;
       role.value = result['role'] as String?;
       return orgId.value != null;
-    } catch (_) {
+    } catch (e) {
       orgId.value = null;
-      return false;
+      rethrow; // Let SplashController handle and show the error
     }
   }
 

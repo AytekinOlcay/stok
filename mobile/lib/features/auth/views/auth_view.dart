@@ -77,7 +77,7 @@ class AuthView extends GetView<AuthController> {
                       ),
                     ),
 
-                    // Confirm password (register only)
+                    // Confirm password + invite code (register only)
                     if (!isLogin) ...[
                       const SizedBox(height: 12),
                       TextField(
@@ -88,6 +88,31 @@ class AuthView extends GetView<AuthController> {
                           prefixIcon: Icon(Icons.lock_outline),
                           border: OutlineInputBorder(),
                         ),
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: controller.inviteCodeCtrl,
+                        textCapitalization: TextCapitalization.characters,
+                        maxLength: 6,
+                        decoration: const InputDecoration(
+                          labelText: 'Davet Kodu (isteğe bağlı)',
+                          hintText: 'örn. D9DF9B',
+                          prefixIcon: Icon(Icons.key_outlined),
+                          border: OutlineInputBorder(),
+                          counterText: '',
+                          helperText:
+                              'Organizasyona davet edildiysen kodu gir.',
+                        ),
+                        onChanged: (v) {
+                          final upper = v.toUpperCase();
+                          if (v != upper) {
+                            controller.inviteCodeCtrl.value = TextEditingValue(
+                              text: upper,
+                              selection: TextSelection.collapsed(
+                                  offset: upper.length),
+                            );
+                          }
+                        },
                       ),
                     ],
 

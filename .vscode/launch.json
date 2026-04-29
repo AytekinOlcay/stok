@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "freezer_mobile (dev)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}/mobile",
+      "args": [
+        "--dart-define-from-file=dart-defines.json"
+      ]
+    }
+  ]
+}

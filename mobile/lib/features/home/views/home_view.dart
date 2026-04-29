@@ -9,7 +9,16 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dondurucu Takip')),
+      appBar: AppBar(
+        title: const Text('Dondurucu Takip'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.account_circle_outlined),
+            tooltip: 'Hesabım',
+            onPressed: () => Get.toNamed('/account'),
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

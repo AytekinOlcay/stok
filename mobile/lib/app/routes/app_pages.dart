@@ -16,6 +16,10 @@ import '../../features/search/bindings/search_binding.dart';
 import '../../features/search/views/search_view.dart';
 import '../../features/shelf/bindings/shelf_binding.dart';
 import '../../features/shelf/views/shelf_view.dart';
+import '../../features/account/bindings/account_binding.dart';
+import '../../features/account/views/account_view.dart';
+import '../../features/invite/bindings/join_org_binding.dart';
+import '../../features/invite/views/join_org_view.dart';
 import '../../features/shelves_list/bindings/shelves_list_binding.dart';
 import '../../features/shelves_list/views/shelves_list_view.dart';
 import '../../features/splash/bindings/splash_binding.dart';
@@ -83,6 +87,16 @@ class AppPages {
       name: Routes.shelvesList,
       page: () => const ShelvesListView(),
       binding: ShelvesListBinding(),
+    ),
+    GetPage(
+      name: Routes.account,
+      page: () => const AccountView(),
+      binding: AccountBinding(),
+    ),
+    GetPage(
+      name: Routes.joinOrg,
+      page: () => const JoinOrgView(),
+      binding: JoinOrgBinding(),
     ),
   ];
 }

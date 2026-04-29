@@ -85,6 +85,12 @@ class _StepOrg extends StatelessWidget {
           onPressed: controller.nextStep,
           child: const Text('Devam Et'),
         ),
+        const SizedBox(height: 12),
+        OutlinedButton.icon(
+          icon: const Icon(Icons.key_outlined),
+          label: const Text('Davete Katıl'),
+          onPressed: () => Get.toNamed('/join-org'),
+        ),
       ],
     );
   }

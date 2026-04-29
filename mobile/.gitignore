@@ -12,6 +12,9 @@
 .swiftpm/
 migrate_working_dir/
 
+# Dart defines (contains secrets, do not commit)
+dart-defines.json
+
 # IntelliJ related
 *.iml
 *.ipr
