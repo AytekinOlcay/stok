@@ -8,6 +8,7 @@ class PackageController extends GetxController {
   final isConsuming = false.obs;
   final package = Rxn<Map<String, dynamic>>();
   final totalStock = 0.0.obs;
+  final relatedRecipes = <Map<String, dynamic>>[].obs;
 
   String? get _packageId => package.value?['id'] as String?;
 
@@ -28,6 +29,7 @@ class PackageController extends GetxController {
           .single();
       package.value = data;
       await _refreshStock(data['product_id'] as String);
+      await _fetchRelatedRecipes(data['product_id'] as String);
     } catch (e) {
       if (e is PostgrestException && e.code == 'PGRST116') {
         Get.back();
@@ -39,8 +41,7 @@ class PackageController extends GetxController {
     }
   }
 
-  Future<void> _refreshStock(String productId) async {
-    final stockRows = await _supabase
+  Future<void> _refreshStock(String productId) async {    final stockRows = await _supabase
         .rpc('get_product_total_stock', params: {'p_product_id': productId});
     if (stockRows is List && stockRows.isNotEmpty) {
       totalStock.value =
@@ -48,6 +49,24 @@ class PackageController extends GetxController {
               0.0;
     } else {
       totalStock.value = 0.0;
+    }
+  }
+
+  Future<void> _fetchRelatedRecipes(String productId) async {
+    try {
+      final data = await _supabase
+          .from('recipe_products')
+          .select('recipes(id, title, prep_time_min, video_thumbnail, video_source)')
+          .eq('product_id', productId)
+          .limit(3);
+      if (data is List) {
+        relatedRecipes.value = data
+            .map((e) => (e as Map)['recipes'] as Map<String, dynamic>?)
+            .whereType<Map<String, dynamic>>()
+            .toList();
+      }
+    } catch (_) {
+      // Recipes section is optional — silently ignore failures
     }
   }
 

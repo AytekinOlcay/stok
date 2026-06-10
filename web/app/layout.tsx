@@ -27,6 +27,7 @@ const navItems = [
   { href: "/shelves", label: "🗄️ Shelves" },
   { href: "/logs", label: "📋 Logs" },
   { href: "/statistics", label: "📈 Statistics" },
+  { href: "/recipes", label: "🍳 Tarifler" },
 ];
 
 export default async function RootLayout({

@@ -20,6 +20,10 @@ import '../../features/account/bindings/account_binding.dart';
 import '../../features/account/views/account_view.dart';
 import '../../features/invite/bindings/join_org_binding.dart';
 import '../../features/invite/views/join_org_view.dart';
+import '../../features/recipes/bindings/recipes_binding.dart';
+import '../../features/recipes/bindings/recipe_detail_binding.dart';
+import '../../features/recipes/views/recipes_view.dart';
+import '../../features/recipes/views/recipe_detail_view.dart';
 import '../../features/shelves_list/bindings/shelves_list_binding.dart';
 import '../../features/shelves_list/views/shelves_list_view.dart';
 import '../../features/splash/bindings/splash_binding.dart';
@@ -97,6 +101,16 @@ class AppPages {
       name: Routes.joinOrg,
       page: () => const JoinOrgView(),
       binding: JoinOrgBinding(),
+    ),
+    GetPage(
+      name: Routes.recipes,
+      page: () => const RecipesView(),
+      binding: RecipesBinding(),
+    ),
+    GetPage(
+      name: Routes.recipeDetail,
+      page: () => const RecipeDetailView(),
+      binding: RecipeDetailBinding(),
     ),
   ];
 }

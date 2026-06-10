@@ -35,6 +35,7 @@ flutter run \
 │   └── /shelf/:id      Raf Detayı
 │       └── /package/:id  Paket Detayı
 ├── /search             Envanter Arama / Listesi
+├── /recipes            Tarifler
 ├── /products           Ürün Kataloğu
 └── /statistics         Tüketim İstatistikleri
 ```
@@ -136,6 +137,8 @@ AppBar'da refresh butonu var.
 Kısmi tüketimde: miktar güncellenir, stok yeniden hesaplanır.  
 Tam tüketimde: paket silinir, sayfa kapanır.
 
+**Ek özellik:** Bu ekranda aynı ürünü kullanan tariflerden en fazla 3 tane listelenir.
+
 **RPC:** `consume_package(p_package_id, p_amount)` — atomic
 
 ---
@@ -165,7 +168,36 @@ Tıklanınca: `/package/:id`
 
 ---
 
-### 7. Ürün Kataloğu — `/products`
+### 7. Tarifler — `/recipes`
+
+**Dosya:** `features/recipes/views/recipes_view.dart`  
+**Controller:** `recipes_controller.dart`
+
+Web adminde oluşturulan tariflerin listesini gösterir. Her tarif kartı şunları içerir:
+- Başlık
+- Hazırlık süresi
+- Malzeme sayısı
+- Video küçük resmi (varsa)
+
+Tıklanınca detay sayfasına gider.
+
+---
+
+### 8. Tarif Detayı — `/recipe/:id`
+
+**Dosya:** `features/recipes/views/recipe_detail_view.dart`  
+**Controller:** `recipe_detail_controller.dart`
+
+Tarif detay ekranı şunları gösterir:
+- Başlık ve prep time
+- Video embed (YouTube / Vimeo) veya harici bağlantı
+- Markdown formatlı tarif açıklaması
+- Malzemeler; miktar ve birim bilgileri
+- Paket detayından ilgili tarifler önerisi
+
+---
+
+### 9. Ürün Kataloğu — `/products`
 
 **Dosya:** `features/products/views/products_view.dart`  
 **Controller:** `products_controller.dart`
@@ -187,7 +219,7 @@ Sistemde kayıtlı tüm ürün tiplerini listeler (paket değil, şablon ürünl
 
 ---
 
-### 8. İstatistikler — `/statistics`
+### 10. İstatistikler — `/statistics`
 
 **Dosya:** `features/statistics/views/statistics_view.dart`  
 **Controller:** `statistics_controller.dart`

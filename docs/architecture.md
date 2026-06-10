@@ -260,7 +260,39 @@ Scan QR → Parse prefix → Determine entity → Fetch record from Supabase.
 
 ---
 
-# 7. Inventory Workflow
+# 7. Recipe Subsystem
+The current implementation includes a full recipe subsystem on the Web Admin Panel, plus recipe browsing on mobile.
+
+Web responsibilities:
+- Recipe CRUD with title, markdown description, prep time, video URL, and ingredient links
+- Recipe ingredient mapping through `recipe_products`
+- Soft delete support for recipes with a `deleted_at` timestamp
+- Markdown editing and preview support in the admin UI
+- Video parsing for YouTube, Vimeo, Instagram, TikTok and fallback URLs
+
+Mobile responsibilities:
+- Recipe list and detail screens
+- Embedded video playback for YouTube/Vimeo
+- Markdown recipe rendering in the mobile UI
+- Related recipe suggestions shown on package details
+
+---
+
+# 8. Security & Data Integrity
+Recipes are org-scoped and protected by Supabase RLS.
+
+The system uses a helper function, `auth_user_org_id()`, to resolve the current user's organization safely.
+A security-definer RPC helper, `soft_delete_recipe`, is used for soft deletes so recipe soft-deletion remains both secure and reliable.
+
+Design goals:
+- Keep recipe state tenant-aware via `org_id`
+- Enforce update/delete operations through user session-aware auth
+- Use RPC only where RLS + session context needs deterministic behavior
+
+
+---
+
+# 9. Inventory Workflow
 
 Primary operations:
 
@@ -306,7 +338,7 @@ System logs adjustment.
 
 ---
 
-# 8. Search Workflow
+# 10. Search Workflow
 
 User searches product name.
 
@@ -330,7 +362,7 @@ TETT: 01.12.2026
 
 ---
 
-# 9. Printing Workflow
+# 11. Printing Workflow
 
 Label generation occurs on mobile.
 
@@ -353,7 +385,7 @@ Sent via Bluetooth to thermal printer.
 
 ---
 
-# 10. Analytics Workflow
+# 12. Analytics Workflow
 
 Analytics generated from inventory logs.
 
@@ -375,7 +407,7 @@ This month you consumed:
 
 ---
 
-# 11. Security Model
+# 13. Security Model
 
 Authentication handled by Supabase Auth.
 
@@ -397,7 +429,7 @@ household_members
 
 ---
 
-# 12. Scalability Strategy
+# 14. Scalability Strategy
 
 System designed for future growth.
 

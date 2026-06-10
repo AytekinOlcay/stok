@@ -274,7 +274,12 @@ Example monthly summary:
 DEVELOPMENT RULES
 
 Work iteratively.
+Current implementation status:
 
+- Web Admin: Recipe subsystem implemented with full CRUD, markdown description editor, ingredient amount/unit entry, video URL parsing, and soft delete support.
+- Mobile: Added `Recipes` list/detail flows, recipe markdown rendering, YouTube/Vimeo embedding, and related recipe recommendations on package detail screens.
+- Backend: Supabase schema includes `recipes`, `recipe_products`, RLS policies, and a `soft_delete_recipe` SECURITY DEFINER RPC helper for safe soft deletes.
+- Security: User/org-scoped RLS is enforced via `auth_user_org_id()` and auth-client-aware server actions.
 When responding always include:
 
 1) architecture decisions

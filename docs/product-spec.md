@@ -258,7 +258,62 @@ Freezer containers may be opaque or iced over.
 
 ---
 
-# 10. QR Code Strategy
+# 10. Recipe Model
+Recipes represent user-created meal plans or freezer usage instructions.
+
+Fields:
+
+id uuid
+org_id uuid
+title text
+description text
+prep_time_min integer
+video_url text
+video_source video_source_type
+video_embed_url text
+video_thumbnail text
+created_by uuid
+updated_by uuid
+created_at timestamptz
+updated_at timestamptz
+deleted_at timestamptz
+
+Recipes are scoped by organization and protected by RLS via `auth_user_org_id()`.
+
+# 11. Recipe Product Links
+Each recipe may link to multiple products through `recipe_products`.
+
+Fields:
+
+id uuid
+recipe_id uuid
+product_id uuid
+quantity numeric
+unit text
+sort_order integer
+
+This enables recipe detail pages to show ingredient amounts and units.
+
+# 12. Web Admin Recipes
+Web admin supports recipe CRUD, markdown descriptions, ingredient quantity/unit entry, video URL parsing, and soft delete behavior.
+
+Recipe UI expectations:
+- Create and edit recipe metadata
+- Attach product ingredient rows with quantity and unit
+- Preview markdown descriptions
+- Persist video metadata such as embed URL and thumbnail
+
+# 13. Mobile Recipes
+The mobile app now includes recipe browsing and detail flows.
+
+Mobile capabilities:
+- Recipe list view with thumbnails, prep time, and ingredient count
+- Recipe detail view with embedded video playback and markdown content
+- Related recipes shown on package detail pages for the same product
+
+---
+
+# 14. QR Code Strategy
 
 Two QR types exist.
 

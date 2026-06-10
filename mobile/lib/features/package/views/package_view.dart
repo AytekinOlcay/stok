@@ -91,6 +91,68 @@ class PackageView extends GetView<PackageController> {
                 _DetailRow(label: 'Notlar', value: notes),
               ]),
             ],
+            // ── Related recipes ────────────────────────────────────────
+            Obx(() {
+              final recipes = controller.relatedRecipes;
+              if (recipes.isEmpty) return const SizedBox.shrink();
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      'Bu ürünle yapılabilecek tarifler',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  ...recipes.map((r) => ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: r['video_thumbnail'] != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: Image.network(
+                                  r['video_thumbnail'] as String,
+                                  width: 56,
+                                  height: 40,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : Container(
+                                width: 56,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .surfaceContainerHighest,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text('🍳'),
+                              ),
+                        title: Text(
+                          r['title'] as String? ?? '',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        subtitle: r['prep_time_min'] != null
+                            ? Text(
+                                '${r['prep_time_min']} dk',
+                                style: const TextStyle(fontSize: 12),
+                              )
+                            : null,
+                        onTap: () => Get.toNamed('/recipe/${r['id']}'),
+                      )),
+                  if (controller.relatedRecipes.length >= 3)
+                    TextButton(
+                      onPressed: () => Get.toNamed('/recipes'),
+                      child: const Text('Tümünü Gör →'),
+                    ),
+                ],
+              );
+            }),
             const SizedBox(height: 20),
             // ── Consume section ────────────────────────────────────────
             _ConsumeSection(

@@ -52,6 +52,12 @@ class HomeView extends GetView<HomeController> {
               label: 'İstatistikler',
               onTap: () => Get.toNamed('/statistics'),
             ),
+            const SizedBox(height: 16),
+            _MenuButton(
+              icon: Icons.restaurant_menu,
+              label: 'Tarifler',
+              onTap: () => Get.toNamed('/recipes'),
+            ),
           ],
         ),
       ),

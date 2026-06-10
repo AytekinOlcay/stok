@@ -14,4 +14,6 @@ abstract class Routes {
   static const shelvesList   = '/shelves';
   static const account       = '/account';
   static const joinOrg       = '/join-org';
+  static const recipes       = '/recipes';
+  static const recipeDetail  = '/recipe/:id';
 }

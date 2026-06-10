@@ -47,6 +47,14 @@ dependencies:
   pdf: ^3.11.1
   printing: ^5.13.2
 
+  # Video playback & external links
+  youtube_player_flutter: ^9.1.1
+  webview_flutter: ^4.13.0
+  url_launcher: ^6.3.1
+
+  # Markdown rendering
+  flutter_markdown: ^0.7.7
+
   # Utilities
   intl: ^0.20.2
 
